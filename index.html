@@ -637,6 +637,12 @@
 
     .cam-badge-custom {
       position: relative;
+      display: inline-block;
+      isolation: isolate;
+    }
+
+    .cam-badge-scale {
+      position: relative;
       color: #000000;
       border-radius: 16px;
       padding: 5px 12px;
@@ -647,14 +653,13 @@
       align-items: center;
       gap: 6px;
       overflow: visible;
-      isolation: isolate;
       transform: scale(1);
       transform-origin: center center;
       transition: transform 180ms ease;
     }
 
-    .cam-badge-custom::before,
-    .cam-badge-custom::after {
+    .cam-badge-scale::before,
+    .cam-badge-scale::after {
       content: '';
       position: absolute;
       inset: 0;
@@ -662,7 +667,7 @@
       pointer-events: none;
     }
 
-    .cam-badge-custom::before {
+    .cam-badge-scale::before {
       z-index: 0;
       background: var(--accent-mint);
       border: 1.5px solid #000000;
@@ -670,15 +675,15 @@
       transition: box-shadow 180ms ease;
     }
 
-    .cam-btn:hover .cam-badge-custom {
+    .cam-btn:hover .cam-badge-scale {
       transform: scale(1.05);
     }
 
-    .cam-btn:hover .cam-badge-custom::before {
+    .cam-btn:hover .cam-badge-scale::before {
       box-shadow: 0 4px 8px rgba(0,0,0,0.4), 0 0 7px rgba(149,247,186,0.45);
     }
 
-    .cam-badge-custom::after {
+    .cam-badge-scale::after {
       z-index: 1;
       clip-path: inset(0 round 16px);
       opacity: 0;
@@ -686,23 +691,23 @@
       transition: opacity 150ms ease;
     }
 
-    .cam-btn:hover .cam-badge-custom::after {
+    .cam-btn:hover .cam-badge-scale::after {
       opacity: 1;
     }
 
-    .cam-badge-custom span,
-    .cam-badge-custom img,
-    .cam-badge-custom svg {
+    .cam-badge-scale span,
+    .cam-badge-scale img,
+    .cam-badge-scale svg {
       position: relative;
       z-index: 2;
     }
 
-    .cam-badge-custom span {
+    .cam-badge-scale span {
       white-space: nowrap;
       line-height: 15px;
     }
 
-    .cam-badge-custom img {
+    .cam-badge-scale img {
       width: 14px;
       height: 14px;
       object-fit: contain;
@@ -711,7 +716,7 @@
       transform: translateY(var(--icon-offset-y, 0px)) rotate(calc(var(--bearing, 0deg) - 90deg));
     }
 
-    .cam-badge-custom svg {
+    .cam-badge-scale svg {
       width: 14px;
       height: 14px;
       fill: #000000;
@@ -722,7 +727,7 @@
       transform: translateY(var(--icon-offset-y, 0px)) rotate(calc(var(--bearing, 0deg) - 90deg));
     }
 
-    .cam-btn.is-live .cam-badge-custom::before {
+    .cam-btn.is-live .cam-badge-scale::before {
       background: var(--accent-orange);
       box-shadow: 0 0 12px var(--accent-orange);
     }
@@ -1406,7 +1411,8 @@
 
     .camera-media-wrapper { z-index: 1; overflow: hidden; background: #000000; }
 
-    .camera-feed-loading { z-index: 5; }
+    .camera-feed-loading,
+    .record-media-loading { z-index: 5; }
 
     .camera-media-wrapper img,
     .camera-media-wrapper video {
@@ -1862,7 +1868,7 @@
       transform: translate(-50%, -50%);
     }
 
-    .cam-btn:active .cam-badge-custom {
+    .cam-btn:active .cam-badge-scale {
       transform: scale(1.02);
     }
 
@@ -2134,64 +2140,55 @@
           <!-- 9 Clickable Camera Buttons -->
           <button class="cam-btn" style="left: 12.0007%; top: 46.2292%; --bearing: 44deg;" onclick="openCameraModal(1)">
             <div class="cam-badge-custom" id="cam-badge-1">
-              <svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg>
-              <span>CAMERA 01</span>
+              <div class="cam-badge-scale"><svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg><span>CAMERA 01</span></div>
             </div>
           </button>
 
           <button class="cam-btn" style="left: 22.3802%; top: 54.8816%; --bearing: 297deg;" onclick="openCameraModal(2)">
             <div class="cam-badge-custom" id="cam-badge-2">
-              <svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg>
-              <span>CAMERA 02</span>
+              <div class="cam-badge-scale"><svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg><span>CAMERA 02</span></div>
             </div>
           </button>
 
           <button class="cam-btn" style="left: 36.8115%; top: 27.0791%; --bearing: 126deg;" onclick="openCameraModal(3)">
             <div class="cam-badge-custom" id="cam-badge-3">
-              <svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg>
-              <span>CAMERA 03</span>
+              <div class="cam-badge-scale"><svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg><span>CAMERA 03</span></div>
             </div>
           </button>
 
           <button class="cam-btn" style="left: 39.9%; top: 67.8%; --bearing: 306deg;" onclick="openCameraModal(4)">
             <div class="cam-badge-custom" id="cam-badge-4">
-              <svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg>
-              <span>CAMERA 04</span>
+              <div class="cam-badge-scale"><svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg><span>CAMERA 04</span></div>
             </div>
           </button>
 
           <button class="cam-btn" style="left: 45.883%; top: 91.0616%; --bearing: 0deg;" onclick="openCameraModal(5)">
             <div class="cam-badge-custom" id="cam-badge-5">
-              <svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg>
-              <span>CAMERA 05</span>
+              <div class="cam-badge-scale"><svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg><span>CAMERA 05</span></div>
             </div>
           </button>
 
           <button class="cam-btn" style="left: 54.8192%; top: 63.256%; --bearing: 56deg;" onclick="openCameraModal(6)">
             <div class="cam-badge-custom" id="cam-badge-6">
-              <svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg>
-              <span>CAMERA 06</span>
+              <div class="cam-badge-scale"><svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg><span>CAMERA 06</span></div>
             </div>
           </button>
 
           <button class="cam-btn" style="left: 71.3859%; top: 58.8553%; --bearing: 120deg;" onclick="openCameraModal(7)">
             <div class="cam-badge-custom" id="cam-badge-7">
-              <svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg>
-              <span>CAMERA 07</span>
+              <div class="cam-badge-scale"><svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg><span>CAMERA 07</span></div>
             </div>
           </button>
 
           <button class="cam-btn" style="left: 76.9526%; top: 40.411%; --bearing: 90deg;" onclick="openCameraModal(8)">
             <div class="cam-badge-custom" id="cam-badge-8">
-              <svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg>
-              <span>CAMERA 08</span>
+              <div class="cam-badge-scale"><svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg><span>CAMERA 08</span></div>
             </div>
           </button>
 
           <button class="cam-btn" style="left: 92.076%; top: 83.2596%; --bearing: 330deg;" onclick="openCameraModal(9)">
             <div class="cam-badge-custom" id="cam-badge-9">
-              <svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg>
-              <span>CAMERA 09</span>
+              <div class="cam-badge-scale"><svg viewBox="0 0 24 24"><path d="M4 4h10v12H4zM16 8l4-3v10l-4-3z"/></svg><span>CAMERA 09</span></div>
             </div>
           </button>
 
@@ -2347,6 +2344,7 @@
 
       <div class="record-modal-display">
         <div class="record-modal-media-wrapper" id="record-modal-media"></div>
+        <div class="media-loading-status record-media-loading" id="record-media-loading" role="status" aria-live="polite"><span>LOADING RECORD DATA</span></div>
         <button class="nav-arrow left" aria-label="Previous record" onclick="prevRecord(); updateRecordModal();"></button>
         <button class="nav-arrow right" aria-label="Next record" onclick="nextRecord(); updateRecordModal();"></button>
 
@@ -3759,8 +3757,20 @@
       renderRecordCard();
     }
 
+    let recordMediaRequestId = 0;
+    let recordViewerInitialMediaPending = false;
+
+    function setRecordMediaLoading(visible, message = 'LOADING RECORD DATA') {
+      const loading = document.getElementById('record-media-loading');
+      loading.querySelector('span').textContent = message;
+      loading.classList.toggle('is-visible', visible);
+      loading.classList.toggle('is-error', message !== 'LOADING RECORD DATA');
+    }
+
     function openRecordModal() {
       cameraTrackingController.onDSecondaryOpen();
+      recordViewerInitialMediaPending = !document.querySelector('#record-modal-media img, #record-modal-media video');
+      setRecordMediaLoading(false);
       updateRecordModal();
       const modal = document.getElementById('record-modal');
       activateOverlayWithMotion(modal);
@@ -3807,9 +3817,32 @@
 
       const mediaContainer = document.getElementById('record-modal-media');
       const requestedRecordIdx = currentRecordIdx;
+      const requestId = ++recordMediaRequestId;
       const media = document.createElement(rec.type === 'video' ? 'video' : 'img');
-      media.src = rec.file;
       media.setAttribute('aria-label', rec.file);
+      const showInitialLoading = () => {
+        requestAnimationFrame(() => {
+          if (recordViewerInitialMediaPending && requestId === recordMediaRequestId) {
+            setRecordMediaLoading(true);
+          }
+        });
+      };
+      const showReadyMedia = () => {
+        if (requestId !== recordMediaRequestId || requestedRecordIdx !== currentRecordIdx) return;
+        mediaContainer.replaceChildren(media);
+        if (recordViewerInitialMediaPending) {
+          recordViewerInitialMediaPending = false;
+          setRecordMediaLoading(false);
+        }
+      };
+      const handleMediaError = () => {
+        if (requestId !== recordMediaRequestId || requestedRecordIdx !== currentRecordIdx) return;
+        if (recordViewerInitialMediaPending) {
+          recordViewerInitialMediaPending = false;
+          setRecordMediaLoading(true, 'RECORD MEDIA UNAVAILABLE');
+        }
+        console.error('Record media failed to load', rec.file);
+      };
 
       if (rec.type === 'video') {
         media.autoplay = true;
@@ -3817,14 +3850,16 @@
         media.muted = true;
         media.playsInline = true;
         media.addEventListener('contextmenu', event => event.preventDefault());
-        media.addEventListener('loadeddata', () => {
-          if (requestedRecordIdx === currentRecordIdx) mediaContainer.replaceChildren(media);
-        }, { once: true });
+        media.addEventListener('loadeddata', showReadyMedia, { once: true });
       } else {
         media.alt = rec.file;
-        media.addEventListener('load', () => {
-          if (requestedRecordIdx === currentRecordIdx) mediaContainer.replaceChildren(media);
-        }, { once: true });
+        media.addEventListener('load', showReadyMedia, { once: true });
+      }
+      media.addEventListener('error', handleMediaError, { once: true });
+      media.src = rec.file;
+      showInitialLoading();
+      if ((rec.type === 'video' && media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) || (rec.type !== 'video' && media.complete && media.naturalWidth)) {
+        showReadyMedia();
       }
     }
 
@@ -4835,7 +4870,7 @@
 
     function initCameraMarkerIllumination() {
       document.querySelectorAll('.cam-btn').forEach(button => {
-        const badge = button.querySelector('.cam-badge-custom');
+        const badge = button.querySelector('.cam-badge-scale');
         if (!badge) return;
         button.addEventListener('pointermove', event => {
           const rect = badge.getBoundingClientRect();
