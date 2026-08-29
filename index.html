@@ -624,6 +624,10 @@
     .cam-btn {
       position: absolute;
       transform: translate(-50%, -50%);
+      display: block;
+      margin: 0;
+      padding: 0;
+      line-height: 0;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -639,7 +643,7 @@
       font-family: var(--font-main);
       font-weight: 800;
       font-size: 13px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
       overflow: visible;
@@ -3937,6 +3941,7 @@
     let liveSwitchCooldownUntil = 0;
     let cameraClockTimer = null;
     let cameraMediaRequestId = 0;
+    let cameraViewerInitialMediaPending = false;
     let viewerMediaState = 'static';
     let sessionHasUsedSetAsLive = false;
 
@@ -4035,7 +4040,9 @@
 
       wrapper.appendChild(media);
       requestAnimationFrame(() => {
-        if (!mediaReady && requestId === cameraMediaRequestId) setCameraFeedLoading(true);
+        if (!mediaReady && cameraViewerInitialMediaPending && requestId === cameraMediaRequestId) {
+          setCameraFeedLoading(true);
+        }
       });
       try {
         await waitForCameraMedia(media, isVideo);
@@ -4062,7 +4069,10 @@
         }
         viewerMediaState = media.dataset.cameraState;
         updateCameraHUD();
-        setCameraFeedLoading(false);
+        if (cameraViewerInitialMediaPending) {
+          cameraViewerInitialMediaPending = false;
+          setCameraFeedLoading(false);
+        }
         requestAnimationFrame(() => { media.style.opacity = '1'; });
         options.onReady?.(media);
         if (isVideo) await media.play().catch(() => {});
@@ -4077,7 +4087,10 @@
         mediaReady = true;
         media.remove();
         if (requestId === cameraMediaRequestId) {
-          setCameraFeedLoading(true, 'FEED UNAVAILABLE');
+          if (cameraViewerInitialMediaPending) {
+            cameraViewerInitialMediaPending = false;
+            setCameraFeedLoading(true, 'FEED UNAVAILABLE');
+          }
           console.error('Camera media failed to load', error);
         }
         return null;
@@ -4112,6 +4125,7 @@
 
     function stopCameraMedia() {
       cameraMediaRequestId++;
+      cameraViewerInitialMediaPending = false;
       setCameraFeedLoading(false);
       document.querySelectorAll('#camera-media-wrapper video').forEach(video => video.pause());
       document.getElementById('camera-media-wrapper').replaceChildren();
@@ -4537,6 +4551,7 @@
       syncSecondaryLivestreamBlur(drawer, false);
       drawer.querySelector('.record-livestream-toggle').setAttribute('aria-expanded', 'false');
       activateOverlayWithMotion(modal);
+      cameraViewerInitialMediaPending = !isOutOfService;
       setCameraFeedLoading(false);
       updateLiveHintVisibility();
       renderCameraForCurrentState(camNum);
