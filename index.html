@@ -3886,7 +3886,7 @@
     const ACTIVITY_TRACE_POINTS = Object.freeze({
       2: toActivityTracePoint(171, 296),
       1: toActivityTracePoint(331, 183),
-      3: toActivityTracePoint(636, 279),
+      3: toActivityTracePoint(633, 294),
       5: toActivityTracePoint(656, 526),
       4: toActivityTracePoint(504, 400),
       7: toActivityTracePoint(1207, 527)
@@ -4801,6 +4801,8 @@
     function initTechnicalGridGlow() {
       const area = document.querySelector('.panel-c .content-box');
       const svg = area?.querySelector('.technical-grid-overlay');
+      const mapWrapper = area?.querySelector('#map-wrapper');
+      if (svg && mapWrapper && svg.parentElement !== mapWrapper) mapWrapper.prepend(svg);
       const markers = svg?.querySelector('.technical-grid-intersections');
       const glow = svg?.querySelector('.technical-grid-glow');
       const gradient = svg?.querySelector('#calibration-glow-gradient');
