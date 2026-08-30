@@ -647,13 +647,14 @@
       border-radius: 16px;
       padding: 5px 12px;
       font-family: var(--font-main);
-      font-weight: 800;
+      font-weight: 400;
       font-size: 13px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       overflow: visible;
-      transform: scale(1);
+      will-change: transform;
+      transform: translateZ(0) scale(1);
       transform-origin: center center;
       transition: transform 180ms ease;
     }
@@ -676,7 +677,7 @@
     }
 
     .cam-btn:hover .cam-badge-scale {
-      transform: scale(1.05);
+      transform: translateZ(0) scale(1.05);
     }
 
     .cam-btn:hover .cam-badge-scale::before {
@@ -704,6 +705,9 @@
 
     .cam-badge-scale span {
       white-space: nowrap;
+      font-family: var(--font-main);
+      font-size: 13px;
+      font-weight: 400;
       line-height: 15px;
     }
 
@@ -1869,7 +1873,7 @@
     }
 
     .cam-btn:active .cam-badge-scale {
-      transform: scale(1.02);
+      transform: translateZ(0) scale(1.02);
     }
 
     .bio-value > [id],
@@ -4864,16 +4868,17 @@
         const renderedCenterY = (Math.min(...rotatedYs) + Math.max(...rotatedYs)) / 2;
         const cssHeight = svg.getBoundingClientRect().height || 14;
         const offset = (centerY - renderedCenterY) * (cssHeight / viewBox.height);
-        svg.style.setProperty('--icon-offset-y', `${offset.toFixed(3)}px`);
+        svg.style.setProperty('--icon-offset-y', `${Math.round(offset * 2) / 2}px`);
       });
     }
 
     function initCameraMarkerIllumination() {
       document.querySelectorAll('.cam-btn').forEach(button => {
+        const shell = button.querySelector('.cam-badge-custom');
         const badge = button.querySelector('.cam-badge-scale');
-        if (!badge) return;
+        if (!shell || !badge) return;
         button.addEventListener('pointermove', event => {
-          const rect = badge.getBoundingClientRect();
+          const rect = shell.getBoundingClientRect();
           badge.style.setProperty('--hover-x', `${event.clientX - rect.left}px`);
           badge.style.setProperty('--hover-y', `${event.clientY - rect.top}px`);
         });
